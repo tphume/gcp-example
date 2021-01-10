@@ -1,0 +1,14 @@
+# Example of Standard environment configuration
+runtime: go114
+
+main: ./cmd/main
+
+env_variables:
+  PORT: "8080"
+
+service: default
+
+handlers:
+  - url: /
+    secure: always
+    script: auto

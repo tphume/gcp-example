@@ -1,0 +1,26 @@
+<html lang="en">
+    <head>
+        <title>Example Web Server</title>
+    </head>
+    <body>
+        <section>
+            <h1>Request Information</h1>
+            <ul>
+                <li><strong>Method</strong>: {{.Request.Method}}</li>
+                <li><strong>Hostname</strong>: {{.Request.Host}}</li>
+                {{range $key, $value := .Request.Header}}
+                    <li><strong>{{$key}}</strong>: {{$value}}</li>
+                {{end}}
+            </ul>
+        </section>
+        <br>
+        <section>
+            <h1>Server Information</h1>
+            <ul>
+                <li><strong>OS</strong>: {{.System.OS}}</li>
+                <li><strong>CPU Number</strong>: {{.System.CPU}}</li>
+                <li><strong>IP</strong>: {{.System.IP}}</li>
+            </ul>
+        </section>
+    </body>
+</html>
