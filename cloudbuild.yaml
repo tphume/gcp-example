@@ -1,0 +1,7 @@
+steps:
+  - name: golang
+    args: ['go', 'build', './main/cmd/main.go']
+artifacts:
+  objects:
+    location: '[STORAGE_LOCATION]'
+    paths: ['[ARTIFACT_PATH]']
