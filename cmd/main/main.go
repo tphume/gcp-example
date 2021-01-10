@@ -63,7 +63,10 @@ func main() {
 
 	// Start server
 	address := "0.0.0.0:" + os.Getenv("PORT")
+	if address == "0.0.0.0:" {
+		address = "0.0.0.0:80"
+	}
 
-	log.Println("Starting web server on port 80")
+	log.Println("Starting web server")
 	log.Fatal(http.ListenAndServe(address, nil))
 }

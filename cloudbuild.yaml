@@ -1,13 +1,26 @@
 steps:
-  - name: golang
+  # Make a deploy directory we'll tar after building the app.
+  - name: 'debian'
+    args: ['mkdir', '-p', 'deploy/etc/systemd/system/', 'deploy/usr/bin']
+  # Build the app.
+  - name: 'golang'
     env: [
         'GO111MODULE=on',
         'GOPROXY=https://proxy.golang.org,direct',
         'GOOS=linux',
         'GOARCH=amd64'
     ]
-    args: ['go', 'build', './cmd/main/main.go']
+    args: ['go', 'build', '-o', 'deploy/usr/bin/app', './cmd/main/main.go']
+  # Copy the systemd service file into the deploy directory.
+  - name: 'debian'
+    args: ['cp', 'app.service', 'deploy/etc/systemd/system/']
+  # Compress the deploy directory.
+  - name: 'debian'
+    args: ['tar', '-czf', 'gcp-example', '-C', './deploy', '.']
+  # Compress template directory
+  - name: 'debian'
+    args: [ 'tar', '-czf', 'template', '-C', './tpl', '.' ]
 artifacts:
   objects:
-    location: 'gs://gcp-example-1290/' # Change this to match your storage
-    paths: ['main']
+    location: 'gs://gcp-example-1290/'
+    paths: ['gcp-example', 'template']
